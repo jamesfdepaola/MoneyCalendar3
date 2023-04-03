@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MoneyCalendarModelStoreContainer" CdmEntityContainer="MoneyDataEntity">
+    <EntitySetMapping Name="Accounts">
+      <EntityTypeMapping TypeName="MoneyDataEntity.Account">
+        <MappingFragment StoreEntitySet="tblAccounts">
+          <ScalarProperty Name="TradeFee" ColumnName="TradeFee" />
+          <ScalarProperty Name="PurchaseByCost" ColumnName="PurchaseByCost" />
+          <ScalarProperty Name="SharePrice" ColumnName="SharePrice" />
+          <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="IsDefaultOpen" ColumnName="IsDefaultOpen" />
+          <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Bank" ColumnName="Bank" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="RoutingNumber" ColumnName="RoutingNumber" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BudgetItems">
+      <EntityTypeMapping TypeName="MoneyDataEntity.BudgetItem">
+        <MappingFragment StoreEntitySet="tblBudgetItems">
+          <ScalarProperty Name="IsMinProjected" ColumnName="IsMinProjected" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="DefaultBudget" ColumnName="DefaultBudget" />
+          <ScalarProperty Name="IsIncome" ColumnName="IsIncome" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BudgetItemID" ColumnName="BudgetItemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Earners">
+      <EntityTypeMapping TypeName="MoneyDataEntity.Earner">
+        <MappingFragment StoreEntitySet="tblEarners">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EarnerID" ColumnName="EarnerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobs">
+      <EntityTypeMapping TypeName="MoneyDataEntity.Job">
+        <MappingFragment StoreEntitySet="tblJobs">
+          <ScalarProperty Name="PayDay2" ColumnName="PayDay2" />
+          <ScalarProperty Name="PayAccountID" ColumnName="PayAccountID" />
+          <ScalarProperty Name="PayAmount" ColumnName="PayAmount" />
+          <ScalarProperty Name="PayDay" ColumnName="PayDay" />
+          <ScalarProperty Name="PayPeriod" ColumnName="PayPeriod" />
+          <ScalarProperty Name="PayDateLoadingIsEnabled" ColumnName="PayDateLoadingIsEnabled" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Employer" ColumnName="Employer" />
+          <ScalarProperty Name="EarnerID" ColumnName="EarnerID" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MonthlyBudgetItems">
+      <EntityTypeMapping TypeName="MoneyDataEntity.MonthlyBudgetItem">
+        <MappingFragment StoreEntitySet="tblMonthlyBudgetItems">
+          <ScalarProperty Name="Budget" ColumnName="Budget" />
+          <ScalarProperty Name="BudgetMonth" ColumnName="BudgetMonth" />
+          <ScalarProperty Name="BudgetYear" ColumnName="BudgetYear" />
+          <ScalarProperty Name="BudgetItemID" ColumnName="BudgetItemID" />
+          <ScalarProperty Name="MonthlyBudgetItemID" ColumnName="MonthlyBudgetItemID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="MoneyDataEntity.Payment">
+        <MappingFragment StoreEntitySet="tblPayments">
+          <ScalarProperty Name="PaymentDueTypeID" ColumnName="PaymentDueTypeID" />
+          <ScalarProperty Name="PayToAccountID" ColumnName="PayToAccountID" />
+          <ScalarProperty Name="IsPaidToAccount" ColumnName="IsPaidToAccount" />
+          <ScalarProperty Name="DueAccountID" ColumnName="DueAccountID" />
+          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+          <ScalarProperty Name="DueDay" ColumnName="DueDay" />
+          <ScalarProperty Name="DueDateLoadingIsEnabled" ColumnName="DueDateLoadingIsEnabled" />
+          <ScalarProperty Name="InstallmentOpenBalance" ColumnName="InstallmentOpenBalance" />
+          <ScalarProperty Name="IsInstallment" ColumnName="IsInstallment" />
+          <ScalarProperty Name="IsConsumerDebt" ColumnName="IsConsumerDebt" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
+          <ScalarProperty Name="PayToName" ColumnName="PayToName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transactions">
+      <EntityTypeMapping TypeName="MoneyDataEntity.Transaction">
+        <MappingFragment StoreEntitySet="tblTransactions">
+          <ScalarProperty Name="SharesOriginalCost" ColumnName="SharesOriginalCost" />
+          <ScalarProperty Name="PaidFromAccountID" ColumnName="PaidFromAccountID" />
+          <ScalarProperty Name="SharesCost" ColumnName="SharesCost" />
+          <ScalarProperty Name="SharePrice" ColumnName="SharePrice" />
+          <ScalarProperty Name="Shares" ColumnName="Shares" />
+          <ScalarProperty Name="PaidFromAccountCoTransactionID" ColumnName="PaidFromAccountCoTransactionID" />
+          <ScalarProperty Name="TransferCoTransactionID" ColumnName="TransferCoTransactionID" />
+          <ScalarProperty Name="DueTypeID" ColumnName="DueTypeID" />
+          <ScalarProperty Name="DueAmount" ColumnName="DueAmount" />
+          <ScalarProperty Name="CheckClearDate" ColumnName="CheckClearDate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
+          <ScalarProperty Name="CheckNumber" ColumnName="CheckNumber" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="EarnerID" ColumnName="EarnerID" />
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+          <ScalarProperty Name="Venue" ColumnName="Venue" />
+          <ScalarProperty Name="Interest" ColumnName="Interest" />
+          <ScalarProperty Name="Principle" ColumnName="Principle" />
+          <ScalarProperty Name="SalesTax" ColumnName="SalesTax" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionTypes">
+      <EntityTypeMapping TypeName="MoneyDataEntity.TransactionType">
+        <MappingFragment StoreEntitySet="tblTransactionTypes">
+          <ScalarProperty Name="IsStockDividend" ColumnName="IsStockDividend" />
+          <ScalarProperty Name="IsStockType" ColumnName="IsStockType" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDueType" ColumnName="IsDueType" />
+          <ScalarProperty Name="IsDebit" ColumnName="IsDebit" />
+          <ScalarProperty Name="BudgetItemID" ColumnName="BudgetItemID" />
+          <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DeletedItemCount" FunctionName="MoneyDataEntity.Store.DeletedItemCount" />
+    <FunctionImportMapping FunctionImportName="CalculateDayBalance" FunctionName="MoneyDataEntity.Store.CalculateDayBalance" />
+    <FunctionImportMapping FunctionImportName="GetTransactionYears" FunctionName="MoneyDataEntity.Store.GetTransactionYears" />
+    <EntitySetMapping Name="AccountTypes">
+      <EntityTypeMapping TypeName="MoneyDataEntity.AccountType">
+        <MappingFragment StoreEntitySet="tblAccountTypes">
+          <ScalarProperty Name="IsIRAType" ColumnName="IsIRAType" />
+          <ScalarProperty Name="IsStockType" ColumnName="IsStockType" />
+          <ScalarProperty Name="IsCreditType" ColumnName="IsCreditType" />
+          <ScalarProperty Name="IsCashType" ColumnName="IsCashType" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetCashCreditAccountTotals" FunctionName="MoneyDataEntity.Store.GetCashCreditAccountTotals">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MoneyDataEntity.CashCreditAccountTotal">
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompletedSum" ColumnName="CompletedSum" />
+          <ScalarProperty Name="NotCompletedSumPositive" ColumnName="NotCompletedSumPositive" />
+          <ScalarProperty Name="NotCompletedSumNegative" ColumnName="NotCompletedSumNegative" />
+          <ScalarProperty Name="NotCompletedSum" ColumnName="NotCompletedSum" />
+          <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+          <ScalarProperty Name="SelectedDateDueAmountPositive" ColumnName="SelectedDateDueAmountPositive" />
+          <ScalarProperty Name="SelectedDateDueAmountNegative" ColumnName="SelectedDateDueAmountNegative" />
+          <ScalarProperty Name="SelectedDateDueAmount" ColumnName="SelectedDateDueAmount" />
+          <ScalarProperty Name="SelectedDateDueBalance" ColumnName="SelectedDateDueBalance" />
+          <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+          <ScalarProperty Name="AvailableCredit" ColumnName="AvailableCredit" />
+          <ScalarProperty Name="IsDefaultOpen" ColumnName="IsDefaultOpen" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="IsCashType" ColumnName="IsCashType" />
+          <ScalarProperty Name="IsCreditType" ColumnName="IsCreditType" />
+          <ScalarProperty Name="IsStockType" ColumnName="IsStockType" />
+          <ScalarProperty Name="IsIRAType" ColumnName="IsIRAType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetIRAStockAccountTotals" FunctionName="MoneyDataEntity.Store.GetIRAStockAccountTotals">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MoneyDataEntity.IRAStockAccountTotal">
+          <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="TotalShares" ColumnName="TotalShares" />
+          <ScalarProperty Name="SharePrice" ColumnName="SharePrice" />
+          <ScalarProperty Name="MarketValue" ColumnName="MarketValue" />
+          <ScalarProperty Name="ChangeDollars" ColumnName="ChangeDollars" />
+          <ScalarProperty Name="ChangePercent" ColumnName="ChangePercent" />
+          <ScalarProperty Name="TotalCostLessDividends" ColumnName="TotalCostLessDividends" />
+          <ScalarProperty Name="TotalDividends" ColumnName="TotalDividends" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Bank" ColumnName="Bank" />
+          <ScalarProperty Name="PurchaseByCost" ColumnName="PurchaseByCost" />
+          <ScalarProperty Name="IsStockType" ColumnName="IsStockType" />
+          <ScalarProperty Name="IsIRAType" ColumnName="IsIRAType" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

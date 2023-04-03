@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoneyDataEntity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MoneyDataEntity" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="MoneyDataEntity.Account" />
+    <EntitySet Name="BudgetItems" EntityType="MoneyDataEntity.BudgetItem" />
+    <EntitySet Name="Earners" EntityType="MoneyDataEntity.Earner" />
+    <EntitySet Name="Jobs" EntityType="MoneyDataEntity.Job" />
+    <EntitySet Name="MonthlyBudgetItems" EntityType="MoneyDataEntity.MonthlyBudgetItem" />
+    <EntitySet Name="Payments" EntityType="MoneyDataEntity.Payment" />
+    <EntitySet Name="Transactions" EntityType="MoneyDataEntity.Transaction" />
+    <EntitySet Name="TransactionTypes" EntityType="MoneyDataEntity.TransactionType" />
+    <AssociationSet Name="FK_AccountTransaction" Association="MoneyDataEntity.FK_AccountTransaction">
+      <End Role="tblAccount" EntitySet="Accounts" />
+      <End Role="tblTransaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EarnerJob" Association="MoneyDataEntity.FK_EarnerJob">
+      <End Role="tblEarner" EntitySet="Earners" />
+      <End Role="tblJob" EntitySet="Jobs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EarnerTransaction" Association="MoneyDataEntity.FK_EarnerTransaction">
+      <End Role="tblEarner" EntitySet="Earners" />
+      <End Role="tblTransaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobTransaction" Association="MoneyDataEntity.FK_JobTransaction">
+      <End Role="tblJob" EntitySet="Jobs" />
+      <End Role="tblTransaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PaymentTransaction" Association="MoneyDataEntity.FK_PaymentTransaction">
+      <End Role="tblPayment" EntitySet="Payments" />
+      <End Role="tblTransaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TransactionTypeTransaction" Association="MoneyDataEntity.FK_TransactionTypeTransaction">
+      <End Role="tblTransactionType" EntitySet="TransactionTypes" />
+      <End Role="tblTransaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <FunctionImport Name="DeletedItemCount" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="CalculateDayBalance">
+      <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AccountID" Mode="In" Type="Int32" />
+      <Parameter Name="Result" Mode="InOut" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="GetTransactionYears" ReturnType="Collection(Int32)" />
+    <EntitySet Name="AccountTypes" EntityType="MoneyDataEntity.AccountType" />
+    <AssociationSet Name="FK_tblAccounts_tblAccountTypes" Association="MoneyDataEntity.FK_tblAccounts_tblAccountTypes">
+      <End Role="AccountType" EntitySet="AccountTypes" />
+      <End Role="Account" EntitySet="Accounts" />
+    </AssociationSet>
+    <FunctionImport Name="GetCashCreditAccountTotals" ReturnType="Collection(MoneyDataEntity.CashCreditAccountTotal)">
+      <Parameter Name="DateSelected" Mode="In" Type="DateTime" />
+      <Parameter Name="ShowInactive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetIRAStockAccountTotals" ReturnType="Collection(MoneyDataEntity.IRAStockAccountTotal)">
+      <Parameter Name="DateSelected" Mode="In" Type="DateTime" />
+      <Parameter Name="ShowInactive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="CashCreditAccountTotal">
+    <Property Name="AccountID" Nullable="true" Type="Int32" />
+    <Property Name="Name" Nullable="true" Type="String" MaxLength="50" />
+    <Property Name="CompletedSum" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="NotCompletedSumPositive" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="NotCompletedSumNegative" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="NotCompletedSum" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="CurrentBalance" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="SelectedDateDueAmountPositive" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="SelectedDateDueAmountNegative" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="SelectedDateDueAmount" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="SelectedDateDueBalance" Nullable="true" DefaultValue="0" Type="Decimal" Precision="19" />
+    <Property Name="CreditLimit" DefaultValue="0" Type="Decimal" Nullable="true" Precision="19" />
+    <Property Name="AvailableCredit" DefaultValue="0" Type="Decimal" Nullable="true" Precision="19" />
+    <Property Type="Boolean" Name="IsDefaultOpen" Nullable="true" />
+    <Property Type="Double" Name="Sort" Nullable="true" />
+    <Property Type="Boolean" Name="IsCashType" Nullable="false" />
+    <Property Type="Boolean" Name="IsCreditType" Nullable="false" />
+    <Property Type="Boolean" Name="IsStockType" Nullable="false" />
+    <Property Type="Boolean" Name="IsIRAType" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoutingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreditLimit" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsDefaultOpen" Type="Boolean" Nullable="false" />
+    <Property Name="Sort" Type="Double" />
+    <NavigationProperty Name="Transactions" Relationship="MoneyDataEntity.FK_AccountTransaction" FromRole="tblAccount" ToRole="tblTransaction" />
+    <Property Name="AccountTypeID" Type="Int32" Nullable="false" />
+    <Property Name="SharePrice" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="AccountType" Relationship="MoneyDataEntity.FK_tblAccounts_tblAccountTypes" FromRole="Account" ToRole="AccountType" />
+    <Property Name="PurchaseByCost" Type="Boolean" Nullable="false" />
+    <Property Name="TradeFee" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="BudgetItem">
+    <Key>
+      <PropertyRef Name="BudgetItemID" />
+    </Key>
+    <Property Name="BudgetItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsIncome" Type="Boolean" Nullable="false" />
+    <Property Name="DefaultBudget" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Sort" Type="Single" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsMinProjected" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Earner">
+    <Key>
+      <PropertyRef Name="EarnerID" />
+    </Key>
+    <Property Name="EarnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Jobs" Relationship="MoneyDataEntity.FK_EarnerJob" FromRole="tblEarner" ToRole="tblJob" />
+    <NavigationProperty Name="Transactions" Relationship="MoneyDataEntity.FK_EarnerTransaction" FromRole="tblEarner" ToRole="tblTransaction" />
+  </EntityType>
+  <EntityType Name="Job">
+    <Key>
+      <PropertyRef Name="JobID" />
+    </Key>
+    <Property Name="JobID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EarnerID" Type="Int32" />
+    <Property Name="Employer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="PayDateLoadingIsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="PayPeriod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PayDay" Type="Int32" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAccountID" Type="Int32" />
+    <NavigationProperty Name="Earner" Relationship="MoneyDataEntity.FK_EarnerJob" FromRole="tblJob" ToRole="tblEarner" />
+    <NavigationProperty Name="Transactions" Relationship="MoneyDataEntity.FK_JobTransaction" FromRole="tblJob" ToRole="tblTransaction" />
+    <Property Name="PayDay2" Type="Int32" />
+  </EntityType>
+  <EntityType Name="MonthlyBudgetItem">
+    <Key>
+      <PropertyRef Name="MonthlyBudgetItemID" />
+    </Key>
+    <Property Name="MonthlyBudgetItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BudgetItemID" Type="Int32" Nullable="false" />
+    <Property Name="BudgetYear" Type="Int16" Nullable="false" />
+    <Property Name="BudgetMonth" Type="Int16" Nullable="false" />
+    <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PayToName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsConsumerDebt" Type="Boolean" Nullable="false" />
+    <Property Name="IsInstallment" Type="Boolean" Nullable="false" />
+    <Property Name="InstallmentOpenBalance" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueDateLoadingIsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="DueDay" Type="Int32" />
+    <Property Name="DueAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueAccountID" Type="Int32" />
+    <Property Name="IsPaidToAccount" Type="Boolean" Nullable="false" />
+    <Property Name="PayToAccountID" Type="Int32" />
+    <Property Name="PaymentDueTypeID" Type="Int32" />
+    <NavigationProperty Name="Transactions" Relationship="MoneyDataEntity.FK_PaymentTransaction" FromRole="tblPayment" ToRole="tblTransaction" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="SalesTax" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Principle" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Interest" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentID" Type="Int32" />
+    <Property Name="EarnerID" Type="Int32" />
+    <Property Name="JobID" Type="Int32" />
+    <Property Name="CheckNumber" Type="Int32" />
+    <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CheckClearDate" Type="DateTime" Precision="3" />
+    <Property Name="DueAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueTypeID" Type="Int32" />
+    <Property Name="TransferCoTransactionID" Type="Int32" />
+    <Property Name="PaidFromAccountCoTransactionID" Type="Int32" />
+    <NavigationProperty Name="Account" Relationship="MoneyDataEntity.FK_AccountTransaction" FromRole="tblTransaction" ToRole="tblAccount" />
+    <NavigationProperty Name="Earner" Relationship="MoneyDataEntity.FK_EarnerTransaction" FromRole="tblTransaction" ToRole="tblEarner" />
+    <NavigationProperty Name="Job" Relationship="MoneyDataEntity.FK_JobTransaction" FromRole="tblTransaction" ToRole="tblJob" />
+    <NavigationProperty Name="Payment" Relationship="MoneyDataEntity.FK_PaymentTransaction" FromRole="tblTransaction" ToRole="tblPayment" />
+    <NavigationProperty Name="TransactionType" Relationship="MoneyDataEntity.FK_TransactionTypeTransaction" FromRole="tblTransaction" ToRole="tblTransactionType" />
+    <Property Name="Shares" Type="Double" />
+    <Property Name="SharePrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SharesCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PaidFromAccountID" Type="Int32" />
+    <Property Name="SharesOriginalCost" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="TransactionType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sort" Type="Single" />
+    <Property Name="IsSystem" Type="Boolean" Nullable="false" />
+    <Property Name="BudgetItemID" Type="Int32" />
+    <Property Name="IsDebit" Type="Boolean" Nullable="false" />
+    <Property Name="IsDueType" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Transactions" Relationship="MoneyDataEntity.FK_TransactionTypeTransaction" FromRole="tblTransactionType" ToRole="tblTransaction" />
+    <Property Name="IsStockType" Type="Boolean" Nullable="false" />
+    <Property Name="IsStockDividend" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AccountTransaction">
+    <End Type="MoneyDataEntity.Account" Role="tblAccount" Multiplicity="1" />
+    <End Type="MoneyDataEntity.Transaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAccount">
+        <PropertyRef Name="AccountID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EarnerJob">
+    <End Type="MoneyDataEntity.Earner" Role="tblEarner" Multiplicity="0..1" />
+    <End Type="MoneyDataEntity.Job" Role="tblJob" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblEarner">
+        <PropertyRef Name="EarnerID" />
+      </Principal>
+      <Dependent Role="tblJob">
+        <PropertyRef Name="EarnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EarnerTransaction">
+    <End Type="MoneyDataEntity.Earner" Role="tblEarner" Multiplicity="0..1" />
+    <End Type="MoneyDataEntity.Transaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblEarner">
+        <PropertyRef Name="EarnerID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="EarnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobTransaction">
+    <End Type="MoneyDataEntity.Job" Role="tblJob" Multiplicity="0..1" />
+    <End Type="MoneyDataEntity.Transaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblJob">
+        <PropertyRef Name="JobID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="JobID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PaymentTransaction">
+    <End Type="MoneyDataEntity.Payment" Role="tblPayment" Multiplicity="0..1" />
+    <End Type="MoneyDataEntity.Transaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPayment">
+        <PropertyRef Name="PaymentID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="PaymentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TransactionTypeTransaction">
+    <End Type="MoneyDataEntity.TransactionType" Role="tblTransactionType" Multiplicity="1" />
+    <End Type="MoneyDataEntity.Transaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTransactionType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AccountType">
+    <Key>
+      <PropertyRef Name="AccountTypeID" />
+    </Key>
+    <Property Name="AccountTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsCashType" Type="Boolean" Nullable="false" />
+    <Property Name="IsCreditType" Type="Boolean" Nullable="false" />
+    <Property Name="IsStockType" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tblAccounts" Relationship="MoneyDataEntity.FK_tblAccounts_tblAccountTypes" FromRole="AccountType" ToRole="Account" />
+    <Property Name="IsIRAType" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="IRAStockAccountTotal">
+    <Property Type="Int32" Name="AccountID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="Double" Name="Sort" Nullable="true" />
+    <Property Type="Double" Name="TotalShares" Nullable="true" />
+    <Property Type="Decimal" Name="SharePrice" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="MarketValue" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="ChangeDollars" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="ChangePercent" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TotalCostLessDividends" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TotalDividends" Nullable="true" Precision="19" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Bank" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="PurchaseByCost" Nullable="false" />
+    <Property Type="Boolean" Name="IsStockType" Nullable="false" />
+    <Property Type="Boolean" Name="IsIRAType" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_tblAccounts_tblAccountTypes">
+    <End Type="MoneyDataEntity.AccountType" Role="AccountType" Multiplicity="1" />
+    <End Type="MoneyDataEntity.Account" Role="Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountType">
+        <PropertyRef Name="AccountTypeID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="AccountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

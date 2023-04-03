@@ -1,0 +1,261 @@
+﻿<Window x:Class="MoneyCalendar.Windows.TransactionBatchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MoneyCalendar.Windows"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        
+        xmlns:moneywindows="clr-namespace:MoneyCalendar.Windows"
+        
+        Title="New Transaction Batch" Height="600" Width="1400"        
+        Icon="..\Images\NewTransactionBatch.png"
+
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Insert" Margin="10" Padding="0 0 0 10">
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="155" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="175" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="Control" x:Key="ControlBaseStyle">
+                        <Setter Property="Margin" Value="10 0 10 0" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Height" Value="25" />
+                    </Style>
+
+                    <Style TargetType="Label" BasedOn="{StaticResource ControlBaseStyle}" >
+                        <Setter Property="Padding" Value="0" />
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource ControlBaseStyle}" />
+                    <Style TargetType="DatePicker" BasedOn="{StaticResource ControlBaseStyle}" />
+                    <Style TargetType="CheckBox" BasedOn="{StaticResource ControlBaseStyle}" />
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource ControlBaseStyle}" />
+                </Grid.Resources>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Date" />
+                <DatePicker Grid.Row="1" Grid.Column="0" 
+                        SelectedDate="{Binding NewEntry.TransactionDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        moneywindows:AttachedProperties.IsFocused="{Binding TransactionBatchNewEntryDateIsFocused}"  >
+                    <DatePicker.InputBindings>
+                        <KeyBinding Key="Up" Command="{Binding DecrementNewEntryDateCommand}"/>
+                        <KeyBinding Key="Down" Command="{Binding IncrementNewEntryDateCommand}"/>
+                    </DatePicker.InputBindings>                    
+                </DatePicker>
+
+                <Label Grid.Row="0" Grid.Column="1" Content="Amount" />
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtNewEntryAmount" TextAlignment="Right" 
+                        GotKeyboardFocus="AutoSelectAllTextBox_GotKeyboardFocus" 
+                        Text="{Binding NewEntry.Amount, StringFormat=c, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+
+                <Label Grid.Row="0" Grid.Column="2" Content="Type" />
+                <ComboBox Grid.Row="1" Grid.Column="2" DisplayMemberPath="Name" SelectedValuePath="TypeID" 
+                        moneywindows:AttachedProperties.IsFocused="{Binding NewEntryTypeIsFocused}"
+                        IsDropDownOpen="{Binding ShowNewEntryTypeList}"
+                        SelectedValue="{Binding NewEntry.TypeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        ItemsSource="{Binding CalendarViewModel.TransactionTypes}" />
+
+                <Label Grid.Row="0" Grid.Column="3" Content="Venue" />
+                <TextBox Grid.Row="1" Grid.Column="3" x:Name="txtNewEntryVenue" TextWrapping="Wrap" Height="auto" MinHeight="25"
+                        GotKeyboardFocus="AutoSelectAllTextBox_GotKeyboardFocus" LostFocus="AutoCompleteTextoBox_LostFocus"
+                        Text="{Binding NewEntryVenue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        moneywindows:AttachedProperties.IsFocused="{Binding NewEntryVenueIsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Up" Command="{Binding AutoCompleteSuggestionIncrementIndexCommand}" CommandParameter="-1"/>
+                        <KeyBinding Key="Down" Command="{Binding AutoCompleteSuggestionIncrementIndexCommand}" />
+                        <KeyBinding Key="Return" Command="{Binding SelectAutoCompleteSuggestionCommand}" CommandParameter="{Binding ElementName=lstAutoCompleteSuggestions, Path=SelectedValue}" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                
+                <Label Grid.Row="0" Grid.Column="4" Content="Description" />
+                <TextBox Grid.Row="1" Grid.Column="4" x:Name="txtNewEntryDescription" TextWrapping="Wrap" AcceptsReturn="True" MinLines="3" VerticalContentAlignment="Top"
+                        GotKeyboardFocus="AutoSelectAllTextBox_GotKeyboardFocus" LostFocus="AutoCompleteTextoBox_LostFocus"
+                        Text="{Binding NewEntryDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        moneywindows:AttachedProperties.IsFocused="{Binding NewEntryDescriptionIsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Up" Command="{Binding AutoCompleteSuggestionIncrementIndexCommand}" CommandParameter="-1"/>
+                        <KeyBinding Key="Down" Command="{Binding AutoCompleteSuggestionIncrementIndexCommand}" />
+                        <KeyBinding Key="Return" Command="{Binding SelectAutoCompleteSuggestionCommand}" CommandParameter="{Binding ElementName=lstAutoCompleteSuggestions, Path=SelectedValue}" />
+                    </TextBox.InputBindings>
+                    <TextBox.Style>
+                        <Style TargetType="TextBox" BasedOn="{StaticResource ControlBaseStyle}" >
+                            <Setter Property="Height" Value="auto" />
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+
+                <Label Grid.Row="0" Grid.Column="5" Content="Account" />
+                <ComboBox x:Name="cboNewEntryTransactionType" Grid.Row="1" Grid.Column="5" DisplayMemberPath="AccountName" SelectedValuePath="AccountID" 
+                        SelectedValue="{Binding NewEntry.AccountID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        ItemsSource="{Binding CalendarViewModel.AccountSelectionList}"
+                        moneywindows:AttachedProperties.IsFocused="{Binding NewEntryAccountIsFocused, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Label Grid.Row="0" Grid.Column="6" Content="Posted" HorizontalAlignment="Center" />
+                <CheckBox Grid.Row="1" Grid.Column="6" IsChecked="{Binding NewEntry.IsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" />
+
+                <Button Grid.Column="7" Grid.RowSpan="2" Content="Insert" Command="{Binding AddNewEntryToTransactionBatchCommand}" VerticalAlignment="Center" />
+
+                <!--#region Autofill popup-->
+                <Popup x:Name="popupSuggestion" AllowsTransparency="False" StaysOpen="False" Placement="Bottom" Height="auto" Width="auto" 
+                        FocusManager.FocusedElement="{Binding ElementName=lstAutoCompleteSuggestions}" >
+                    <Popup.PlacementTarget>
+                        <MultiBinding Converter="{StaticResource ObjectSelector}">
+                            <Binding ElementName="txtNewEntryVenue" />
+                            <Binding Path="ShowVenueAutoCompleteSuggestions" />
+                            <Binding ElementName="txtNewEntryDescription" />
+                            <Binding Path="ShowDescriptionAutoCompleteSuggestions" />
+                        </MultiBinding>
+                    </Popup.PlacementTarget>
+                    <Popup.IsOpen>
+                        <MultiBinding Converter="{StaticResource BooleanAndConverter}" >
+                            <Binding ElementName="popupSuggestion" Path="PlacementTarget.IsFocused" Mode="OneWay" />
+                            <Binding Path="ShowAutoCompleteSuggestions" Mode="TwoWay" />
+                        </MultiBinding>
+                    </Popup.IsOpen>
+
+                    <Border>
+                        <ListBox x:Name="lstAutoCompleteSuggestions"                                  
+                                ItemsSource="{Binding AutoCompleteSuggestions, Mode=OneWay}"
+                                SelectedIndex="{Binding AutoCompleteSuggestionIndex, Mode=TwoWay}" >
+                        </ListBox>
+                    </Border>
+                </Popup>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        
+        <DataGrid Grid.Row="1" ItemsSource="{Binding NewTransactionBatch}" AutoGenerateColumns="False" CanUserAddRows="False" >
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+                <Style TargetType="ComboBox" x:Key="TransactionTypesComboBoxStyle">
+                    <Setter Property="ItemsSource" Value="{Binding CalendarViewModel.TransactionTypes}" />
+                </Style>
+                
+                <Style x:Key="DataGridControlStyle" TargetType="Control">
+                    <Setter Property="Margin" Value="2" />
+                </Style>
+                <Style x:Key="DataGridLabelStyle" TargetType="Label" BasedOn="{StaticResource DataGridControlStyle}" >
+                    <Setter Property="Foreground" Value="Black" />
+
+                    <Style.Triggers>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding >
+                                <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                                    <Binding Path="IsSelected" RelativeSource="{RelativeSource AncestorType={x:Type DataGridRow}}" />
+                                    <Binding Path="IsKeyboardFocused" RelativeSource="{RelativeSource AncestorType={x:Type DataGrid}}" Converter="{StaticResource NegateBooleanConverter}" />
+                                </MultiBinding>
+                            </DataTrigger.Binding>
+                            <Setter Property="Foreground" Value="White" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="DatePicker" BasedOn="{StaticResource DataGridControlStyle}" />
+            </DataGrid.Resources>
+            
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding TransactionDate}" Style="{StaticResource DataGridLabelStyle}" ContentStringFormat="yyyy-MM-dd" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding TransactionDate}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn x:Name="colAmount" Header="Amount" Binding="{Binding Amount, StringFormat=c}" />
+
+                <DataGridTextColumn Header="Type" Binding="{Binding TransactionType.Name}" />
+
+                <!--<DataGridComboBoxColumn Header="Type" DisplayMemberPath="Name" SelectedValuePath="TypeID" SelectedValueBinding="{Binding TypeID}" >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}" >
+                            <Setter Property="ItemsSource" Value="{Binding ElementName=cboNewEntryTransactionType, Path=ItemsSource}" />
+                            
+                            --><!--<Setter Property="ItemsSource" Value="{Binding Path=DataContext.CalendarViewModel.TransactionTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />--><!--
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}" >
+                            <Setter Property="ItemsSource" Value="{Binding ElementName=cboNewEntryTransactionType, Path=ItemsSource}" />
+                            --><!--<Setter Property="ItemsSource" Value="{Binding Path=DataContext.CalendarViewModel.TransactionTypes, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />--><!--
+                        </Style> 
+                    </DataGridComboBoxColumn.EditingElementStyle>
+
+                </DataGridComboBoxColumn>-->
+
+                <DataGridTextColumn Header="Venue" Binding="{Binding Venue}" Width="*" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*"  />
+
+                <DataGridTextColumn Header="Account" Binding="{Binding AccountName}" Width="auto" />
+                <!--<DataGridComboBoxColumn Header="Account" DisplayMemberPath="AccountName" SelectedValuePath="AccountID" Width="*" 
+                        SelectedValueBinding="{Binding AccountID}"                                        >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AccountSelectionList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.AccountSelectionList, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>-->
+
+                <DataGridCheckBoxColumn Header="Posted" Binding="{Binding IsCompleted}" Width="auto" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <WrapPanel Grid.Row="2">
+            <Button Content="Save" Command="{Binding SaveNewTransactionBatchCommand}" />
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
+            <Button Content="Cancel" />
+        </WrapPanel>
+    </Grid>
+</Window>

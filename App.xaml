@@ -1,0 +1,99 @@
+﻿<Application x:Class="MoneyCalendar.MoneyApplication"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MoneyCalendar"
+             xmlns:converters="clr-namespace:MoneyCalendar.ValueConverters">
+
+    <Application.Resources>
+        <!--#region Converters-->
+        <converters:MultiplicationConverter x:Key="MultiplicationConverter" />
+        <converters:MultiMultiplicationConverter x:Key="MultiMultiplicationConverter" />
+        <converters:AdditionConverter x:Key="AdditionConverter" />
+        <converters:GridLengthAdditionConverter x:Key="GridLengthAdditionConverter" />
+        <converters:IntegerToTextConverter x:Key="IntegerToTextConverter" />
+        <converters:NumberToGridLengthConverter x:Key="NumberToGridLengthConverter" />
+        <converters:GridLengthToDoubleConverter x:Key="GridLengthToDoubleConverter" />
+        <converters:MultiBindingToMarginConverter x:Key="MultiBindingToMarginConverter" />
+        <converters:NumberIsEvenConverter x:Key="NumberIsEvenConverter"/>
+        <converters:NumberIsNegativeConverter x:Key="NumberIsNegativeConverter" />
+        <converters:PercentToStringConverter x:Key="PercentToStringConverter" />
+        
+        <converters:EmptyStringToNullConverter x:Key="EmptyStringToNullConverter" />
+        <converters:ValueIsEmptyConverter x:Key="ValueIsEmptyConverter" />
+        <converters:ValueIsNotEmptyConverter x:Key="ValueIsNotEmptyConverter" />
+
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:BooleanAndToVisibilityConverter x:Key="BooleanAndToVisibilityConverter" />
+        <converters:BooleanOrToVisibilityConverter x:Key="BooleanOrToVisibilityConverter" />
+        <converters:BooleanNorToVisibilityConverter x:Key="BooleanNorToVisibilityConverter" />
+        <converters:NegateBooleanToVisibilityConverter x:Key="NegateBooleanToVisibilityConverter" />
+        <converters:BooleanToGoToOrSelectConverter x:Key="BooleanToGoToOrSelectConverter" />
+        <converters:BooleanToGoToOrAddConverter x:Key="BooleanToGoToOrAddConverter" />
+        <converters:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter" />
+
+        <converters:ItemCountVisibilityConverter x:Key="ItemCountVisibilityConverter" />
+        <converters:HideEmptyValueConverter x:Key="HideEmptyValueConverter" />
+        
+        <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+        <converters:BooleanOrConverter x:Key="BooleanOrConverter" />
+        <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+        <converters:BooleanNorConverter x:Key="BooleanNorConverter" />
+        <converters:RecordIDToBooleanConverter x:Key="RecordIDToBooleanConverter" />
+
+        <converters:SelectedRecordToByIDConverter x:Key="SelectedRecordToByIDConverter" />
+        <converters:ObjectSelector x:Key="ObjectSelector" />
+        <converters:ListSortingConverter x:Key="ListSortingConverter" />
+        <converters:CurrentDateBackgroundConverter x:Key="CurrentDateBackgroundConverter" />
+        <converters:TesterConverter x:Key="TesterConverter" />
+        <!--#endregion-->
+
+        <!--#region  Styles-->
+        <Style x:Key="LargeCalendarStyle" TargetType="{x:Type Calendar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Calendar}">
+                        <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                        <Viewbox Height="400"
+                         Width="400">
+                            <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="RightAlignedTextBoxStyle">
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        
+        <Style x:Key="WrappedColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}"></TextBlock>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="DataGridCheckBoxStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="DataGridTextBlockStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="DataGridTextBoxStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+        <!--#endregion-->
+    </Application.Resources>
+</Application>

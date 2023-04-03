@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblAccount">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RoutingNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Bank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="CreditLimit" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsDefaultOpen" Type="Boolean" Nullable="false" />
+    <Property Name="Sort" Type="Double" />
+    <Property Name="AccountTypeID" Type="Int32" Nullable="false" />
+    <Property Name="SharePrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PurchaseByCost" Type="Boolean" Nullable="false" />
+    <Property Name="TradeFee" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="tblAccountType" Relationship="Self.FK_tblAccounts_tblAccountTypes" FromRole="tblAccounts" ToRole="tblAccountTypes" />
+  </EntityType>
+  <EntityType Name="tblAccountType">
+    <Key>
+      <PropertyRef Name="AccountTypeID" />
+    </Key>
+    <Property Name="AccountTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsCashType" Type="Boolean" Nullable="false" />
+    <Property Name="IsCreditType" Type="Boolean" Nullable="false" />
+    <Property Name="IsStockType" Type="Boolean" Nullable="false" />
+    <Property Name="IsIRAType" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="tblAccounts" Relationship="Self.FK_tblAccounts_tblAccountTypes" FromRole="tblAccountTypes" ToRole="tblAccounts" />
+  </EntityType>
+  <EntityType Name="tblBudgetItem">
+    <Key>
+      <PropertyRef Name="BudgetItemID" />
+    </Key>
+    <Property Name="BudgetItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsIncome" Type="Boolean" Nullable="false" />
+    <Property Name="DefaultBudget" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Sort" Type="Single" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsMinProjected" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblEarner">
+    <Key>
+      <PropertyRef Name="EarnerID" />
+    </Key>
+    <Property Name="EarnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblJob">
+    <Key>
+      <PropertyRef Name="JobID" />
+    </Key>
+    <Property Name="JobID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EarnerID" Type="Int32" />
+    <Property Name="Employer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="PayDateLoadingIsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="PayPeriod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PayDay" Type="Int32" />
+    <Property Name="PayDay2" Type="Int32" />
+    <Property Name="PayAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PayAccountID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="tblMonthlyBudgetItem">
+    <Key>
+      <PropertyRef Name="MonthlyBudgetItemID" />
+    </Key>
+    <Property Name="MonthlyBudgetItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BudgetItemID" Type="Int32" Nullable="false" />
+    <Property Name="BudgetYear" Type="Int16" Nullable="false" />
+    <Property Name="BudgetMonth" Type="Int16" Nullable="false" />
+    <Property Name="Budget" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="tblPayment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PayToName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Website" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsConsumerDebt" Type="Boolean" Nullable="false" />
+    <Property Name="IsInstallment" Type="Boolean" Nullable="false" />
+    <Property Name="InstallmentOpenBalance" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueDateLoadingIsEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="DueDay" Type="Int32" />
+    <Property Name="DueAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueAccountID" Type="Int32" />
+    <Property Name="IsPaidToAccount" Type="Boolean" Nullable="false" />
+    <Property Name="PayToAccountID" Type="Int32" />
+    <Property Name="PaymentDueTypeID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountID" Type="Int32" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="SalesTax" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Principle" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Interest" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentID" Type="Int32" />
+    <Property Name="EarnerID" Type="Int32" />
+    <Property Name="JobID" Type="Int32" />
+    <Property Name="CheckNumber" Type="Int32" />
+    <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="CheckClearDate" Type="DateTime" Precision="3" />
+    <Property Name="DueAmount" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DueTypeID" Type="Int32" />
+    <Property Name="TransferCoTransactionID" Type="Int32" />
+    <Property Name="PaidFromAccountCoTransactionID" Type="Int32" />
+    <Property Name="Shares" Type="Double" />
+    <Property Name="SharePrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SharesCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PaidFromAccountID" Type="Int32" />
+    <Property Name="SharesOriginalCost" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+  <EntityType Name="tblTransactionType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sort" Type="Single" />
+    <Property Name="IsSystem" Type="Boolean" Nullable="false" />
+    <Property Name="BudgetItemID" Type="Int32" />
+    <Property Name="IsDebit" Type="Boolean" Nullable="false" />
+    <Property Name="IsDueType" Type="Boolean" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="IsStockType" Type="Boolean" Nullable="false" />
+    <Property Name="IsStockDividend" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tblAccounts_tblAccountTypes">
+    <End Role="tblAccountTypes" Type="Self.tblAccountType" Multiplicity="1" />
+    <End Role="tblAccounts" Type="Self.tblAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAccountTypes">
+        <PropertyRef Name="AccountTypeID" />
+      </Principal>
+      <Dependent Role="tblAccounts">
+        <PropertyRef Name="AccountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MoneyCalendarModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblAccounts" EntityType="Self.tblAccount" />
+    <EntitySet Name="tblAccountTypes" EntityType="Self.tblAccountType" />
+    <EntitySet Name="tblBudgetItems" EntityType="Self.tblBudgetItem" />
+    <EntitySet Name="tblEarners" EntityType="Self.tblEarner" />
+    <EntitySet Name="tblJobs" EntityType="Self.tblJob" />
+    <EntitySet Name="tblMonthlyBudgetItems" EntityType="Self.tblMonthlyBudgetItem" />
+    <EntitySet Name="tblPayments" EntityType="Self.tblPayment" />
+    <EntitySet Name="Transactions" EntityType="Entities.Transaction" />
+    <EntitySet Name="tblTransactionTypes" EntityType="Self.tblTransactionType" />
+    <AssociationSet Name="FK_tblAccounts_tblAccountTypes" Association="Self.FK_tblAccounts_tblAccountTypes">
+      <End Role="tblAccountTypes" EntitySet="tblAccountTypes" />
+      <End Role="tblAccounts" EntitySet="tblAccounts" />
+    </AssociationSet>
+    <FunctionImport Name="CalculateDayBalance">
+      <Parameter Name="SelectedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="AccountID" Mode="In" Type="Int32" />
+      <Parameter Name="Result" Mode="InOut" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="DeletedItemCount" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="GetCashCreditAccountTotals" ReturnType="Collection(Entities.GetCashCreditAccountTotals_Result)">
+      <Parameter Name="DateSelected" Mode="In" Type="DateTime" />
+      <Parameter Name="ShowInactive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetIRAStockAccountTotals" ReturnType="Collection(Entities.GetIRAStockAccountTotals_Result)">
+      <Parameter Name="DateSelected" Mode="In" Type="DateTime" />
+      <Parameter Name="ShowInactive" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetTransactionYears" ReturnType="Collection(Int32)" />
+  </EntityContainer>
+  <ComplexType Name="GetCashCreditAccountTotals_Result">
+    <Property Type="Int32" Name="AccountID" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="IsDefaultOpen" Nullable="true" />
+    <Property Type="Double" Name="Sort" Nullable="true" />
+    <Property Type="Decimal" Name="CompletedSum" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="NotCompletedSumPositive" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="NotCompletedSumNegative" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="NotCompletedSum" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="CurrentBalance" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateDueAmountPositive" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateDueAmountNegative" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateDueAmount" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateDueBalance" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateCompletedSum" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SelectedDateBalance" Nullable="true" Precision="19" />
+    <Property Type="Boolean" Name="IsCashType" Nullable="false" />
+    <Property Type="Boolean" Name="IsCreditType" Nullable="false" />
+    <Property Type="Boolean" Name="IsIRAType" Nullable="false" />
+    <Property Type="Boolean" Name="IsStockType" Nullable="false" />
+    <Property Type="Decimal" Name="CreditLimit" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="AvailableCredit" Nullable="true" Precision="19" />
+  </ComplexType>
+  <ComplexType Name="GetIRAStockAccountTotals_Result">
+    <Property Type="Int32" Name="AccountID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Bank" Nullable="true" MaxLength="50" />
+    <Property Type="Double" Name="Sort" Nullable="true" />
+    <Property Type="Boolean" Name="PurchaseByCost" Nullable="false" />
+    <Property Type="Boolean" Name="IsIRAType" Nullable="false" />
+    <Property Type="Boolean" Name="IsStockType" Nullable="false" />
+    <Property Type="Double" Name="TotalShares" Nullable="true" />
+    <Property Type="Decimal" Name="TotalCostLessDividends" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="TotalDividends" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="SharePrice" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="MarketValue" Nullable="true" Precision="19" />
+    <Property Type="Boolean" Name="IsDefaultOpen" Nullable="false" />
+    <Property Type="Decimal" Name="ChangeDollars" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="ChangeDollars1" Nullable="true" Precision="19" />
+    <Property Type="Decimal" Name="ChangePercent" Nullable="true" Precision="19" />
+  </ComplexType>
+</Schema>

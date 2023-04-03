@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoneyDataEntity.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblAccounts">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="RoutingNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bank" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreditLimit" Type="money" />
+    <Property Name="IsDefaultOpen" Type="bit" Nullable="false" />
+    <Property Name="Sort" Type="float" />
+    <Property Name="AccountTypeID" Type="int" Nullable="false" />
+    <Property Name="SharePrice" Type="money" />
+    <Property Name="PurchaseByCost" Type="bit" Nullable="false" />
+    <Property Name="TradeFee" Type="money" />
+  </EntityType>
+  <EntityType Name="tblAccountTypes">
+    <Key>
+      <PropertyRef Name="AccountTypeID" />
+    </Key>
+    <Property Name="AccountTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsCashType" Type="bit" Nullable="false" />
+    <Property Name="IsCreditType" Type="bit" Nullable="false" />
+    <Property Name="IsStockType" Type="bit" Nullable="false" />
+    <Property Name="IsIRAType" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblBudgetItems">
+    <Key>
+      <PropertyRef Name="BudgetItemID" />
+    </Key>
+    <Property Name="BudgetItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsIncome" Type="bit" Nullable="false" />
+    <Property Name="DefaultBudget" Type="money" />
+    <Property Name="Sort" Type="real" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsMinProjected" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblEarners">
+    <Key>
+      <PropertyRef Name="EarnerID" />
+    </Key>
+    <Property Name="EarnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblJobs">
+    <Key>
+      <PropertyRef Name="JobID" />
+    </Key>
+    <Property Name="JobID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EarnerID" Type="int" />
+    <Property Name="Employer" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="PayDateLoadingIsEnabled" Type="bit" Nullable="false" />
+    <Property Name="PayPeriod" Type="nvarchar" MaxLength="50" />
+    <Property Name="PayDay" Type="int" />
+    <Property Name="PayDay2" Type="int" />
+    <Property Name="PayAmount" Type="money" />
+    <Property Name="PayAccountID" Type="int" />
+  </EntityType>
+  <EntityType Name="tblMonthlyBudgetItems">
+    <Key>
+      <PropertyRef Name="MonthlyBudgetItemID" />
+    </Key>
+    <Property Name="MonthlyBudgetItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BudgetItemID" Type="int" Nullable="false" />
+    <Property Name="BudgetYear" Type="smallint" Nullable="false" />
+    <Property Name="BudgetMonth" Type="smallint" Nullable="false" />
+    <Property Name="Budget" Type="money" />
+  </EntityType>
+  <EntityType Name="tblPayments">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeID" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+    <Property Name="PayToName" Type="nvarchar" MaxLength="255" />
+    <Property Name="AccountNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Website" Type="nvarchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsConsumerDebt" Type="bit" Nullable="false" />
+    <Property Name="IsInstallment" Type="bit" Nullable="false" />
+    <Property Name="InstallmentOpenBalance" Type="money" />
+    <Property Name="DueDateLoadingIsEnabled" Type="bit" Nullable="false" />
+    <Property Name="DueDay" Type="int" />
+    <Property Name="DueAmount" Type="money" />
+    <Property Name="DueAccountID" Type="int" />
+    <Property Name="IsPaidToAccount" Type="bit" Nullable="false" />
+    <Property Name="PayToAccountID" Type="int" />
+    <Property Name="PaymentDueTypeID" Type="int" />
+  </EntityType>
+  <EntityType Name="tblTransactions">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountID" Type="int" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="SalesTax" Type="money" />
+    <Property Name="Principle" Type="money" />
+    <Property Name="Interest" Type="money" />
+    <Property Name="Venue" Type="nvarchar" MaxLength="50" />
+    <Property Name="PaymentID" Type="int" />
+    <Property Name="EarnerID" Type="int" />
+    <Property Name="JobID" Type="int" />
+    <Property Name="CheckNumber" Type="int" />
+    <Property Name="IsCompleted" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="CheckClearDate" Type="datetime" />
+    <Property Name="DueAmount" Type="money" />
+    <Property Name="DueTypeID" Type="int" />
+    <Property Name="TransferCoTransactionID" Type="int" />
+    <Property Name="PaidFromAccountCoTransactionID" Type="int" />
+    <Property Name="Shares" Type="float" />
+    <Property Name="SharePrice" Type="money" />
+    <Property Name="SharesCost" Type="money" />
+    <Property Name="PaidFromAccountID" Type="int" />
+    <Property Name="SharesOriginalCost" Type="money" />
+  </EntityType>
+  <EntityType Name="tblTransactionTypes">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sort" Type="real" />
+    <Property Name="IsSystem" Type="bit" Nullable="false" />
+    <Property Name="BudgetItemID" Type="int" />
+    <Property Name="IsDebit" Type="bit" Nullable="false" />
+    <Property Name="IsDueType" Type="bit" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsStockType" Type="bit" Nullable="false" />
+    <Property Name="IsStockDividend" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tblAccounts_tblAccountTypes">
+    <End Role="tblAccountTypes" Type="Self.tblAccountTypes" Multiplicity="1" />
+    <End Role="tblAccounts" Type="Self.tblAccounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAccountTypes">
+        <PropertyRef Name="AccountTypeID" />
+      </Principal>
+      <Dependent Role="tblAccounts">
+        <PropertyRef Name="AccountTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="CalculateDayBalance" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SelectedDate" Type="date" Mode="In" />
+    <Parameter Name="AccountID" Type="int" Mode="In" />
+    <Parameter Name="Result" Type="decimal" Mode="InOut" />
+  </Function>
+  <Function Name="DeletedItemCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetCashCreditAccountTotals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateSelected" Type="date" Mode="In" />
+    <Parameter Name="ShowInactive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="GetIRAStockAccountTotals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="DateSelected" Type="date" Mode="In" />
+    <Parameter Name="ShowInactive" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="GetTransactionYears" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="MoneyCalendarModelStoreContainer">
+    <EntitySet Name="tblAccounts" EntityType="Self.tblAccounts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAccountTypes" EntityType="Self.tblAccountTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblBudgetItems" EntityType="Self.tblBudgetItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblEarners" EntityType="Self.tblEarners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblJobs" EntityType="Self.tblJobs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMonthlyBudgetItems" EntityType="Self.tblMonthlyBudgetItems" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPayments" EntityType="Self.tblPayments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTransactions" EntityType="Self.tblTransactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTransactionTypes" EntityType="Self.tblTransactionTypes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblAccounts_tblAccountTypes" Association="Self.FK_tblAccounts_tblAccountTypes">
+      <End Role="tblAccountTypes" EntitySet="tblAccountTypes" />
+      <End Role="tblAccounts" EntitySet="tblAccounts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
